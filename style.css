@@ -1,0 +1,249 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Background Gradient */
+.bg-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Game Header Styles */
+.game-header h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* Game Board Container */
+.game-board-container {
+    perspective: 1000px;
+}
+
+/* Game Board Grid */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 15px;
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Individual Card Styles */
+.memory-card {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.memory-card:hover:not(.flipped):not(.matched) {
+    transform: translateY(-5px);
+}
+
+.memory-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    animation: matchSuccess 0.8s ease-in-out;
+}
+
+@keyframes matchSuccess {
+    0%, 100% {
+        transform: rotateY(180deg) scale(1);
+    }
+    50% {
+        transform: rotateY(180deg) scale(1.1);
+    }
+}
+
+/* Card Face Styles */
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-back {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    font-size: 24px;
+    transform: rotateY(0deg);
+}
+
+.card-front {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+    font-size: 32px;
+    transform: rotateY(180deg);
+    animation: cardReveal 0.3s ease-in-out;
+}
+
+@keyframes cardReveal {
+    0% {
+        opacity: 0;
+        transform: rotateY(180deg) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(180deg) scale(1);
+    }
+}
+
+/* Restart Button Styles */
+#restart-btn {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(232, 67, 147, 0.3);
+}
+
+#restart-btn:hover {
+    background: linear-gradient(135deg, #e84393, #fd79a8);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4);
+}
+
+#restart-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Stats Card Styles */
+.card.bg-dark {
+    background: rgba(0, 0, 0, 0.7) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Modal Styles */
+.modal-content.bg-dark {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+}
+
+.modal-header.border-success,
+.modal-footer.border-success {
+    border-color: #28a745 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-board {
+        width: 320px;
+        height: 320px;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .memory-card {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .card-back,
+    .card-front {
+        font-size: 18px;
+    }
+    
+    .card-front {
+        font-size: 24px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-board {
+        width: 280px;
+        height: 280px;
+        gap: 8px;
+        padding: 12px;
+    }
+    
+    .memory-card {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .card-back {
+        font-size: 14px;
+    }
+    
+    .card-front {
+        font-size: 20px;
+    }
+}
+
+/* Loading Animation for Cards */
+.memory-card.loading {
+    animation: cardLoad 0.5s ease-in-out;
+}
+
+@keyframes cardLoad {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotateY(180deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+    }
+}
+
+/* Pulse animation for timer */
+.pulse {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
